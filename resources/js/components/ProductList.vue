@@ -15,7 +15,7 @@ export default {
 
     computed: {
         products () {
-            return store.state.products
+            return store.getters.availableProducts // get all available products in store throw getters
         }
     },
 

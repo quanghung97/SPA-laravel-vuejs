@@ -8,9 +8,10 @@ const store = new Vuex.Store({
         products: []
     },
 
-    getters: { // = computed properties
-        productsCount () {
-            //..
+    getters: { // = computed properties, perfect filter and calculate runtime
+        //sơ chế dữ liệu cần thiết same phương thức get
+        availableProducts (state, getters) {
+            return state.products.filter(product => product.inventory > 0)
         }
     },
 
@@ -22,6 +23,8 @@ const store = new Vuex.Store({
     },
 
     mutations: {
+        //nơi hứng dữ liệu từ các chỗ components đẩy lên khác nhau
+        // same phương thức set
         setProducts (state, products) { // every params have state and payload
             // update products
             state.products = products
