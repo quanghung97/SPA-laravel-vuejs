@@ -17,11 +17,11 @@ export default {
         products () {
             return store.state.products
         }
-    }
+    },
 
     created() {
         shop.getProducts(products => {
-            store.commit('setProducts', products)
+            store.commit('setProducts', products)//send data to store
         })
     }
 }
