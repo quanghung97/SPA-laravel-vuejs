@@ -1,5 +1,5 @@
 /**
- * Mocking client-server processing
+ * Mocking client-server processing (giả lập môi trường delay call API)
  */
 const _products = [
   {"id": 1, "title": "iPad 4 Mini", "price": 500.01, "inventory": 2},
@@ -10,7 +10,7 @@ const _products = [
 
 export default {
   getProducts (cb) {
-    setTimeout(() => cb(_products), 100)
+    setTimeout(() => cb(_products), 3000)
   },
 
   buyProducts (products, cb, errorCb) {

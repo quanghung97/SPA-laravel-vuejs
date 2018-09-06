@@ -1,7 +1,9 @@
 <template>
     <div class="product-list">
         <h1>Product List</h1>
-        <ul>
+        <img v-if="loading" src="https://i.imgur.com/JfPpwOA.gif">
+
+        <ul v-else>
             <li v-for="product in products">{{product.title}} - {{product.price}}</li>
         </ul>
     </div>
@@ -11,6 +13,11 @@
 import store from './../store/index';
 
 export default {
+    data () {
+        return {
+            loading: false
+        }
+    },
 
     computed: {
         products () {
@@ -19,7 +26,9 @@ export default {
     },
 
     created() {//when components created after that fetch to get data with action and save data in store
+        this.loading = true;
         store.dispatch('fetchProducts')
+            .then(() => {this.loading = false})
     }
 }
 </script>
