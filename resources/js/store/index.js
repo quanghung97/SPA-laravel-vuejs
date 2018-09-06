@@ -6,7 +6,9 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: { // = data
-        products: []
+        products: [],
+        // {id, quantity}(giỏ hàng có id của product và số lượng)
+        cart: []
     },
 
     getters: { // = computed properties, perfect filter and calculate runtime
@@ -33,15 +35,49 @@ const store = new Vuex.Store({
                 });
             });
             return callApi;
+        },
+
+        //add to Cart
+        addProductToCart (context, product) {
+            if (product.inventory > 0) {
+                // find cartItem
+                const cartItem = context.state.cart.find(item => item.id === product.id)
+
+                if (!cartItem) {
+                    //pushProductToCart
+                    context.commit('pushProductToCart', product.id)
+                } else {
+                    // incrementItemQuantity
+                    context.commit('incrementItemQuantity', cartItem)
+                }
+                    // decrementProductInventory
+                context.commit('decrementProductInventory', product)
+            }
         }
     },
 
     mutations: {
-        //nơi hứng dữ liệu từ các chỗ components đẩy lên khác nhau
-        // same phương thức set
+        //nơi hứng dữ liệu từ các chỗ components đẩy lên khác nhau thông qua actions của store
+        // same với phương thức set giá trị
         setProducts (state, products) { // every params have state and payload
             // update products
             state.products = products
+        },
+
+        // up cartItem = {id: 123, quantity: 2}
+        pushProductToCart (state, productId) {
+            state.cart.push({
+                id: productId,
+                quantity: 1
+            })
+        },
+
+        incrementItemQuantity (state, cartItem) {
+            cartItem.quantity++
+        },
+
+        decrementProductInventory (state, product) {
+            product.inventory--
         }
     }
 });

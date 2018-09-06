@@ -4,7 +4,10 @@
         <img v-if="loading" src="https://i.imgur.com/JfPpwOA.gif">
 
         <ul v-else>
-            <li v-for="product in products">{{product.title}} - {{product.price}}</li>
+            <li v-for="product in products">
+                {{product.title}} - {{product.prie}}
+                <button @click="addProductToCart(product)">button</button>
+            </li>
         </ul>
     </div>
 </template>
@@ -18,9 +21,15 @@ export default {
         }
     },
 
-    computed: {
+    computed: { // same getter in java
         products () {
             return this.$store.getters.availableProducts // get all available products in store throw getters
+        }
+    },
+
+    methods: {
+        addProductToCart (product) {
+            this.$store.dispatch('addProductToCart', product)
         }
     },
 
