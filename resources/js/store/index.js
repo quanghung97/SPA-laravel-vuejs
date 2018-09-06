@@ -42,16 +42,16 @@ const store = new Vuex.Store({
             if (product.inventory > 0) {
                 // find cartItem
                 const cartItem = context.state.cart.find(item => item.id === product.id)
-
+                var {commit} = context;
                 if (!cartItem) {
                     //pushProductToCart
-                    context.commit('pushProductToCart', product.id)
+                    commit('pushProductToCart', product.id)
                 } else {
                     // incrementItemQuantity
-                    context.commit('incrementItemQuantity', cartItem)
+                    commit('incrementItemQuantity', cartItem)
                 }
                     // decrementProductInventory
-                context.commit('decrementProductInventory', product)
+                    commit('decrementProductInventory', product)
             }
         }
     },

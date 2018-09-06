@@ -47356,16 +47356,17 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
                 var cartItem = context.state.cart.find(function (item) {
                     return item.id === product.id;
                 });
+                var commit = context.commit;
 
                 if (!cartItem) {
                     //pushProductToCart
-                    context.commit('pushProductToCart', product.id);
+                    commit('pushProductToCart', product.id);
                 } else {
                     // incrementItemQuantity
-                    context.commit('incrementItemQuantity', cartItem);
+                    commit('incrementItemQuantity', cartItem);
                 }
                 // decrementProductInventory
-                context.commit('decrementProductInventory', product);
+                commit('decrementProductInventory', product);
             }
         }
     },
