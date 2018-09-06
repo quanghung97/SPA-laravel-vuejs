@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import shop from './../api/shop';
 import store from './../store/index';
 
 export default {
@@ -19,10 +18,8 @@ export default {
         }
     },
 
-    created() {
-        shop.getProducts(products => {
-            store.commit('setProducts', products)//send data to store
-        })
+    created() {//when components created after that fetch to get data with action and save data in store
+        store.dispatch('fetchProducts')
     }
 }
 </script>

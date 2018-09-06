@@ -1,5 +1,6 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import shop from '@/api/shop';
 
 Vue.use(Vuex);
 
@@ -15,10 +16,13 @@ const store = new Vuex.Store({
         }
     },
 
-    actions: {
-        fetchProducts () {
-            //make the call
+    actions: { // = methods
+        fetchProducts (context) { // when some component call dispatch (action), this method sync data
+            //make the call (liên quan đến call API)
             //run setProducts mutations
+            shop.getProducts(products => {
+                context.commit('setProducts', products)//send data to store
+            })
         }
     },
 
