@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import store from './../store/index';
 
 export default {
     data () {
@@ -21,13 +20,13 @@ export default {
 
     computed: {
         products () {
-            return store.getters.availableProducts // get all available products in store throw getters
+            return this.$store.getters.availableProducts // get all available products in store throw getters
         }
     },
 
     created() {//when components created after that fetch to get data with action and save data in store
         this.loading = true;
-        store.dispatch('fetchProducts')
+        this.$store.dispatch('fetchProducts')
             .then(() => {this.loading = false})
     }
 }

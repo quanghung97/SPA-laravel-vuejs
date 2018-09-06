@@ -24959,8 +24959,13 @@ module.exports = __webpack_require__(53);
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_index_js__ = __webpack_require__(49);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -24970,7 +24975,8 @@ module.exports = __webpack_require__(53);
 
 __webpack_require__(15);
 
-window.Vue = __webpack_require__(11);
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -24978,10 +24984,11 @@ window.Vue = __webpack_require__(11);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('app-component', __webpack_require__(40));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app-component', __webpack_require__(40));
 
-var app = new Vue({
-  el: '#app'
+var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+  el: '#app',
+  store: __WEBPACK_IMPORTED_MODULE_1__store_index_js__["a" /* default */]
 });
 
 /***/ }),
@@ -47442,7 +47449,7 @@ exports = module.exports = __webpack_require__(45)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47796,7 +47803,6 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_index__ = __webpack_require__(49);
 //
 //
 //
@@ -47808,7 +47814,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -47821,7 +47826,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         products: function products() {
-            return __WEBPACK_IMPORTED_MODULE_0__store_index__["a" /* default */].getters.availableProducts; // get all available products in store throw getters
+            return this.$store.getters.availableProducts; // get all available products in store throw getters
         }
     },
 
@@ -47830,7 +47835,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         //when components created after that fetch to get data with action and save data in store
         this.loading = true;
-        __WEBPACK_IMPORTED_MODULE_0__store_index__["a" /* default */].dispatch('fetchProducts').then(function () {
+        this.$store.dispatch('fetchProducts').then(function () {
             _this.loading = false;
         });
     }
