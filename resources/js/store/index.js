@@ -9,7 +9,8 @@ const store = new Vuex.Store({
     state: { // = data
         products: [],
         // {id, quantity}(giỏ hàng có id của product và số lượng)
-        cart: []
+        cart: [],
+        setCheckoutStatus: null
     },
 
     getters: { // = computed properties, perfect filter and calculate runtime
@@ -76,6 +77,19 @@ const store = new Vuex.Store({
                     // decrementProductInventory
                     commit('decrementProductInventory', product)
             }
+        },
+
+        checkout ({state, commit}) {
+            shop.buyProducts(
+                state.cart,
+                () => {
+                    commit('emtyCart')
+                    commit('setCheckoutStatus', 'success')
+                },
+                () => {
+                    commit('setCheckoutStatus', 'fail')
+                }
+            )
         }
     },
 
@@ -101,6 +115,14 @@ const store = new Vuex.Store({
 
         decrementProductInventory (state, product) {
             product.inventory--
+        },
+
+        setCheckoutStatus (state, status) {
+            state.checkoutStatus = status
+        },
+
+        emptyCart (state) {
+            state.cart = []
         }
     }
 });
