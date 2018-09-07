@@ -1,5 +1,6 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import _ from 'lodash';
 import shop from './../api/shop';
 
 Vue.use(Vuex);
@@ -15,6 +16,18 @@ const store = new Vuex.Store({
         //sơ chế dữ liệu cần thiết same phương thức get
         availableProducts (state, getters) {
             return state.products.filter(product => product.inventory > 0);
+        },
+        // sync data with computed in ShoppingCart component
+        cartProducts (state, getters) {
+            var result = state.cart.map(cartItem => {
+                const product = state.products.find(product => product.id === cartItem.id)
+                return {
+                    title: product.title,
+                    price: product.price,
+                    quantity: cartItem.quantity
+                }
+            })
+            return result
         }
     },
 
