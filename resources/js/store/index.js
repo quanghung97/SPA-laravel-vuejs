@@ -28,6 +28,16 @@ const store = new Vuex.Store({
                 }
             })
             return result
+        },
+
+        cartTotal (state, getters) {
+            var total = 0
+            getters.cartProducts.forEach(product => {
+                total += product.price * product.quantity
+            })
+            return total
+            // can use reduce to collapse code
+            //return getters.cartProducts.reduce((total, product) => total + product.price * product.quantity, 0)
         }
     },
 

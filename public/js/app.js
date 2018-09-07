@@ -47651,6 +47651,15 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
                 };
             });
             return result;
+        },
+        cartTotal: function cartTotal(state, getters) {
+            var total = 0;
+            getters.cartProducts.forEach(function (product) {
+                total += product.price * product.quantity;
+            });
+            return total;
+            // can use reduce to collapse code
+            //return getters.cartProducts.reduce((total, product) => total + product.price * product.quantity, 0)
         }
     },
 
@@ -49086,7 +49095,7 @@ exports = module.exports = __webpack_require__(14)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49108,11 +49117,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     computed: {
         products: function products() {
             return this.$store.getters.cartProducts;
+        },
+        total: function total() {
+            return this.$store.getters.cartTotal;
         }
     }
 });
@@ -49143,7 +49156,9 @@ var render = function() {
           )
         ])
       })
-    )
+    ),
+    _vm._v(" "),
+    _c("p", [_vm._v("Total : " + _vm._s(_vm.total))])
   ])
 }
 var staticRenderFns = []

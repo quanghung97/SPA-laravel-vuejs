@@ -6,6 +6,7 @@
                 {{product.title}} - {{product.price}} - {{product.quantity}}
             </li>
         </ul>
+        <p>Total : {{total}}</p>
     </div>
 </template>
 
@@ -14,6 +15,9 @@ export default {
     computed: {
         products () {
             return this.$store.getters.cartProducts
+        },
+        total () {
+            return this.$store.getters.cartTotal
         }
     }
 }
