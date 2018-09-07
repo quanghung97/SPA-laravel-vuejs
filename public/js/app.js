@@ -511,10 +511,10 @@ module.exports = defaults;
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return mapState; });
 /* unused harmony export mapMutations */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
-/* unused harmony export mapActions */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapActions; });
 /* unused harmony export createNamespacedHelpers */
 /**
  * vuex v3.0.1
@@ -48641,15 +48641,17 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+
     state: {
         // {id, quantity}(giỏ hàng có id của product và số lượng)
         items: [],
-        setCheckoutStatus: null
+        checkoutStatus: null
     },
 
     getters: {
         // sync data with computed in ShoppingCart component
-        cartProducts: function cartProducts(state, getters, rootState) {
+        cartProducts: function cartProducts(state, getters, rootState, rootGetters) {
             var result = state.items.map(function (cartItem) {
                 var product = rootState.products.items.find(function (product) {
                     return product.id === cartItem.id;
@@ -48694,14 +48696,18 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 
     actions: {
         //add to Cart
-        addProductToCart: function addProductToCart(context, product, rootState) {
-            if (context.getters.productIsInStock(product)) {
+        addProductToCart: function addProductToCart(_ref, product) {
+            var state = _ref.state,
+                getters = _ref.getters,
+                commit = _ref.commit,
+                rootState = _ref.rootState,
+                rootGetters = _ref.rootGetters;
+
+            if (rootGetters['products/productIsInStock'](product)) {
                 // find cartItem
-                var cartItem = context.state.items.find(function (item) {
+                var cartItem = state.items.find(function (item) {
                     return item.id === product.id;
                 });
-                var commit = context.commit;
-
                 if (!cartItem) {
                     //pushProductToCart
                     commit('pushProductToCart', product.id);
@@ -48710,12 +48716,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
                     commit('incrementItemQuantity', cartItem);
                 }
                 // decrementProductInventory
-                commit('decrementProductInventory', product);
+                commit('products/decrementProductInventory', product, { root: true });
             }
         },
-        checkout: function checkout(_ref) {
-            var state = _ref.state,
-                commit = _ref.commit;
+        checkout: function checkout(_ref2) {
+            var state = _ref2.state,
+                commit = _ref2.commit;
 
             __WEBPACK_IMPORTED_MODULE_0__api_shop__["a" /* default */].buyProducts(state.items, function () {
                 commit('emptyCart');
@@ -48736,6 +48742,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+
     state: {
         items: []
     },
@@ -48970,7 +48978,7 @@ exports = module.exports = __webpack_require__(16)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49048,36 +49056,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])({
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])({
         products: function products(state) {
             return state.products.items;
         }
-    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])('products', {
         productIsInStock: 'productIsInStock'
     })),
 
-    // computed: { // same getter in java
-    //     products () {
-    //         return this.$store.state.products
-    //     },
-    //     //dynamic getters send value (object) to getters product and compare inventory in store
-    //     productIsInStock () {
-    //         return this.$store.getters.productIsInStock
-    //     }
-    // },
-
-    methods: {
-        addProductToCart: function addProductToCart(product) {
-            this.$store.dispatch('addProductToCart', product);
-        }
-    },
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])({
+        fetchProducts: 'products/fetchProducts',
+        addProductToCart: 'cart/addProductToCart'
+    })),
 
     created: function created() {
         var _this = this;
 
         //when components created after that fetch to get data with action and save data in store
         this.loading = true;
-        this.$store.dispatch('fetchProducts').then(function () {
+        this.fetchProducts().then(function () {
             _this.loading = false;
         });
     }
@@ -49143,19 +49140,19 @@ if (false) {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(58)
+  __webpack_require__(70)
 }
 var normalizeComponent = __webpack_require__(5)
 /* script */
 var __vue_script__ = __webpack_require__(60)
 /* template */
-var __vue_template__ = __webpack_require__(61)
+var __vue_template__ = __webpack_require__(72)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-c86466da"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -49188,46 +49185,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(59);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(17)("75619bd9", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c86466da\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShoppingCart.vue", function() {
-     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c86466da\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShoppingCart.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(16)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 58 */,
+/* 59 */,
 /* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -49253,74 +49212,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])('cart', {
         products: 'cartProducts',
         total: 'cartTotal'
-    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])({
+    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["d" /* mapState */])('cart', {
         checkoutStatus: function checkoutStatus(state) {
-            return state.cart.checkoutStatus;
+            return state.checkoutStatus;
         }
     })),
-
-    methods: {
-        checkoutCart: function checkoutCart() {
-            this.$store.dispatch('checkout');
-        }
-    }
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])('cart', ['checkout']))
 });
 
 /***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("Shopping Cart")]),
-    _vm._v(" "),
-    _c(
-      "ul",
-      _vm._l(_vm.products, function(product) {
-        return _c("li", [
-          _vm._v(
-            "\n            " +
-              _vm._s(product.title) +
-              " - " +
-              _vm._s(_vm._f("currency")(product.price)) +
-              " - " +
-              _vm._s(product.quantity) +
-              "\n        "
-          )
-        ])
-      })
-    ),
-    _vm._v(" "),
-    _c("p", [_vm._v("Total : " + _vm._s(_vm._f("currency")(_vm.total)))]),
-    _vm._v(" "),
-    _c(
-      "button",
-      { attrs: { type: "button" }, on: { click: _vm.checkoutCart } },
-      [_vm._v("checkOut")]
-    ),
-    _vm._v(" "),
-    _vm.checkoutStatus === true
-      ? _c("p", [_vm._v(_vm._s(_vm.checkoutStatus))])
-      : _vm._e()
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-c86466da", module.exports)
-  }
-}
-
-/***/ }),
+/* 61 */,
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49349,6 +49253,99 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(71);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(17)("6aa94638", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c86466da\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShoppingCart.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c86466da\",\"scoped\":true,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ShoppingCart.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(16)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h1", [_vm._v("Shopping Cart")]),
+    _vm._v(" "),
+    _c(
+      "ul",
+      _vm._l(_vm.products, function(product) {
+        return _c("li", [
+          _vm._v(
+            "\n      " +
+              _vm._s(product.title) +
+              " - " +
+              _vm._s(_vm._f("currency")(product.price)) +
+              " - " +
+              _vm._s(product.quantity) +
+              "\n    "
+          )
+        ])
+      })
+    ),
+    _vm._v(" "),
+    _c("p", [_vm._v("Total: " + _vm._s(_vm._f("currency")(_vm.total)))]),
+    _vm._v(" "),
+    _c("button", { on: { click: _vm.checkout } }, [_vm._v("Checkout")]),
+    _vm._v(" "),
+    _vm.checkoutStatus
+      ? _c("p", [_vm._v(_vm._s(_vm.checkoutStatus))])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-c86466da", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

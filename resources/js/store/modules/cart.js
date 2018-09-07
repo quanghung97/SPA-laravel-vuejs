@@ -1,15 +1,17 @@
 import shop from './../../api/shop';
 
 export default {
+    namespaced: true,
+
     state: {
         // {id, quantity}(giỏ hàng có id của product và số lượng)
         items: [],
-        setCheckoutStatus: null
+        checkoutStatus: null
     },
 
     getters: {
         // sync data with computed in ShoppingCart component
-        cartProducts (state, getters, rootState) {
+        cartProducts (state, getters, rootState, rootGetters) {
             var result = state.items.map(cartItem => {
                 const product = rootState.products.items.find(product => product.id === cartItem.id)
                 return {
@@ -57,11 +59,10 @@ export default {
 
     actions: {
         //add to Cart
-        addProductToCart (context, product, rootState) {
-            if (context.getters.productIsInStock(product)) {
+        addProductToCart ({state, getters, commit, rootState, rootGetters}, product) {
+            if (rootGetters['products/productIsInStock'](product)) {
                 // find cartItem
-                const cartItem = context.state.items.find(item => item.id === product.id)
-                var {commit} = context;
+                const cartItem = state.items.find(item => item.id === product.id)
                 if (!cartItem) {
                     //pushProductToCart
                     commit('pushProductToCart', product.id)
@@ -70,7 +71,7 @@ export default {
                     commit('incrementItemQuantity', cartItem)
                 }
                     // decrementProductInventory
-                    commit('decrementProductInventory', product)
+                    commit('products/decrementProductInventory', product, {root:true})
             }
         },
 

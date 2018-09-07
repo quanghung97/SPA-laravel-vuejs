@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex'
+import {mapState, mapGetters, mapActions} from 'vuex'
 
 export default {
     data () {
@@ -33,35 +33,22 @@ export default {
             products: state => state.products.items
         }),
 
-        ...mapGetters({
+        ...mapGetters('products', {
             productIsInStock: 'productIsInStock'
         })
-
-        // firstProduct: state => state.products[0],
-        // specificProduct (state) {
-        //     return state.products[this.productIndex]
-        // }
     },
 
-    // computed: { // same getter in java
-    //     products () {
-    //         return this.$store.state.products
-    //     },
-    //     //dynamic getters send value (object) to getters product and compare inventory in store
-    //     productIsInStock () {
-    //         return this.$store.getters.productIsInStock
-    //     }
-    // },
 
     methods: {
-        addProductToCart (product) {
-            this.$store.dispatch('addProductToCart', product)
-        }
+        ...mapActions({
+            fetchProducts: 'products/fetchProducts',
+            addProductToCart: 'cart/addProductToCart'
+        })
     },
 
     created() {//when components created after that fetch to get data with action and save data in store
         this.loading = true;
-        this.$store.dispatch('fetchProducts')
+        this.fetchProducts()
             .then(() => {this.loading = false})
     }
 }
