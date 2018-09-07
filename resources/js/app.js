@@ -8,7 +8,8 @@
 require('./bootstrap');
 
 import Vue from 'vue';
-import store from './store/index.js';
+import store from './store/index';
+import {currency} from './currency';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17,6 +18,7 @@ import store from './store/index.js';
  */
 
 Vue.component('app-component', require('./components/App.vue'));
+Vue.filter('currency', currency)
 
 const app = new Vue({
     el: '#app',

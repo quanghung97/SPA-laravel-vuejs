@@ -42388,7 +42388,8 @@ module.exports = __webpack_require__(59);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_index_js__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_index__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__currency__ = __webpack_require__(63);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -42401,6 +42402,7 @@ __webpack_require__(18);
 
 
 
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -42408,10 +42410,11 @@ __webpack_require__(18);
  */
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app-component', __webpack_require__(45));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.filter('currency', __WEBPACK_IMPORTED_MODULE_2__currency__["a" /* currency */]);
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app',
-  store: __WEBPACK_IMPORTED_MODULE_1__store_index_js__["a" /* default */]
+  store: __WEBPACK_IMPORTED_MODULE_1__store_index__["a" /* default */]
 });
 
 /***/ }),
@@ -48978,7 +48981,7 @@ var render = function() {
                 "\n            " +
                   _vm._s(product.title) +
                   " - " +
-                  _vm._s(product.prie) +
+                  _vm._s(_vm._f("currency")(product.price)) +
                   " - " +
                   _vm._s(product.inventory) +
                   "\n            "
@@ -49149,7 +49152,7 @@ var render = function() {
             "\n            " +
               _vm._s(product.title) +
               " - " +
-              _vm._s(product.price) +
+              _vm._s(_vm._f("currency")(product.price)) +
               " - " +
               _vm._s(product.quantity) +
               "\n        "
@@ -49158,7 +49161,7 @@ var render = function() {
       })
     ),
     _vm._v(" "),
-    _c("p", [_vm._v("Total : " + _vm._s(_vm.total))])
+    _c("p", [_vm._v("Total : " + _vm._s(_vm._f("currency")(_vm.total)))])
   ])
 }
 var staticRenderFns = []
@@ -49200,6 +49203,31 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = currency;
+var digitsRE = /(\d{3})(?=\d)/g;
+
+function currency(value, currency, decimals) {
+  value = parseFloat(value);
+  if (!isFinite(value) || !value && value !== 0) return '';
+  currency = currency != null ? currency : '$';
+  decimals = decimals != null ? decimals : 2;
+  var stringified = Math.abs(value).toFixed(decimals);
+  var _int = decimals ? stringified.slice(0, -1 - decimals) : stringified;
+  var i = _int.length % 3;
+  var head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? ',' : '') : '';
+  var _float = decimals ? stringified.slice(-1 - decimals) : '';
+  var sign = value < 0 ? '-' : '';
+  return sign + currency + head + _int.slice(i).replace(digitsRE, '$1,') + _float;
+}
 
 /***/ })
 /******/ ]);
