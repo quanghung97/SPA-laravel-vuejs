@@ -47664,6 +47664,11 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
             return total;
             // can use reduce to collapse code
             //return getters.cartProducts.reduce((total, product) => total + product.price * product.quantity, 0)
+        },
+        productIsInStock: function productIsInStock() {
+            return function (product) {
+                return product.inventory > 0;
+            };
         }
     },
 
@@ -47692,7 +47697,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 
         //add to Cart
         addProductToCart: function addProductToCart(context, product) {
-            if (product.inventory > 0) {
+            if (context.getters.productIsInStock(product)) {
                 // find cartItem
                 var cartItem = context.state.cart.find(function (item) {
                     return item.id === product.id;
@@ -48908,7 +48913,7 @@ exports = module.exports = __webpack_require__(14)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48966,6 +48971,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48979,7 +48989,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         // same getter in java
         products: function products() {
-            return this.$store.getters.availableProducts; // get all available products in store throw getters
+            return this.$store.state.products;
+        },
+
+        //dynamic getters send value (object) to getters product and compare inventory in store
+        productIsInStock: function productIsInStock() {
+            return this.$store.getters.productIsInStock;
         }
     },
 
@@ -49029,13 +49044,14 @@ var render = function() {
               _c(
                 "button",
                 {
+                  attrs: { disabled: !_vm.productIsInStock(product) },
                   on: {
                     click: function($event) {
                       _vm.addProductToCart(product)
                     }
                   }
                 },
-                [_vm._v("button")]
+                [_vm._v("button\n            ")]
               )
             ])
           })

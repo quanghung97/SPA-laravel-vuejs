@@ -39,6 +39,12 @@ const store = new Vuex.Store({
             return total
             // can use reduce to collapse code
             //return getters.cartProducts.reduce((total, product) => total + product.price * product.quantity, 0)
+        },
+
+        productIsInStock () {
+            return (product) => {
+                return product.inventory > 0
+            }
         }
     },
 
@@ -63,7 +69,7 @@ const store = new Vuex.Store({
 
         //add to Cart
         addProductToCart (context, product) {
-            if (product.inventory > 0) {
+            if (context.getters.productIsInStock(product)) {
                 // find cartItem
                 const cartItem = context.state.cart.find(item => item.id === product.id)
                 var {commit} = context;
