@@ -7,8 +7,8 @@
             </li>
         </ul>
         <p>Total : {{total | currency}}</p>
-        <button type="button" @click="checkoutCart">button</button>
-        <p v-if="checkoutStatus">{{checkoutStatus}}</p>
+        <button type="button" @click="checkoutCart">checkOut</button>
+        <p v-if="checkoutStatus === true">{{checkoutStatus}}</p>
     </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
         }),
 
         ...mapState({
-            checkoutStatus: 'checkoutStatus'
+            checkoutStatus: state => state.cart.checkoutStatus
         })
         // products () {
         //     return this.$store.getters.cartProducts
