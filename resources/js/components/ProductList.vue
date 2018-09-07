@@ -18,23 +18,40 @@
 </template>
 
 <script>
+import {mapState, mapGetters} from 'vuex'
 
 export default {
     data () {
         return {
-            loading: false
+            loading: false,
+            productIndex: 1
         }
     },
 
-    computed: { // same getter in java
-        products () {
-            return this.$store.state.products
-        },
-        //dynamic getters send value (object) to getters product and compare inventory in store
-        productIsInStock () {
-            return this.$store.getters.productIsInStock
-        }
+    computed: {
+        ...mapState({
+            products: state => state.products
+        }),
+
+        ...mapGetters({
+            productIsInStock: 'productIsInStock'
+        })
+
+        // firstProduct: state => state.products[0],
+        // specificProduct (state) {
+        //     return state.products[this.productIndex]
+        // }
     },
+
+    // computed: { // same getter in java
+    //     products () {
+    //         return this.$store.state.products
+    //     },
+    //     //dynamic getters send value (object) to getters product and compare inventory in store
+    //     productIsInStock () {
+    //         return this.$store.getters.productIsInStock
+    //     }
+    // },
 
     methods: {
         addProductToCart (product) {

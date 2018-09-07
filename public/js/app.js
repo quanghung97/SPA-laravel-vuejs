@@ -47768,9 +47768,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_0_vuex__["a" /* default */].Store({
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* unused harmony export mapState */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapState; });
 /* unused harmony export mapMutations */
-/* unused harmony export mapGetters */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
@@ -48913,7 +48913,7 @@ exports = module.exports = __webpack_require__(14)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48957,6 +48957,9 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(43);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -48976,27 +48979,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            loading: false
+            loading: false,
+            productIndex: 1
         };
     },
 
 
-    computed: {
-        // same getter in java
-        products: function products() {
-            return this.$store.state.products;
-        },
-
-        //dynamic getters send value (object) to getters product and compare inventory in store
-        productIsInStock: function productIsInStock() {
-            return this.$store.getters.productIsInStock;
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])({
+        products: function products(state) {
+            return state.products;
         }
-    },
+    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        productIsInStock: 'productIsInStock'
+    })),
+
+    // computed: { // same getter in java
+    //     products () {
+    //         return this.$store.state.products
+    //     },
+    //     //dynamic getters send value (object) to getters product and compare inventory in store
+    //     productIsInStock () {
+    //         return this.$store.getters.productIsInStock
+    //     }
+    // },
 
     methods: {
         addProductToCart: function addProductToCart(product) {
@@ -49154,7 +49165,7 @@ exports = module.exports = __webpack_require__(14)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49165,6 +49176,9 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(43);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -49180,15 +49194,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    computed: {
-        products: function products() {
-            return this.$store.getters.cartProducts;
-        },
-        total: function total() {
-            return this.$store.getters.cartTotal;
-        }
-    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        products: 'cartProducts',
+        total: 'cartTotal'
+    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])({
+        checkoutStatus: 'checkoutStatus'
+    })),
 
     methods: {
         checkoutCart: function checkoutCart() {
@@ -49233,8 +49246,8 @@ var render = function() {
       [_vm._v("button")]
     ),
     _vm._v(" "),
-    _vm.$store.state.checkoutStatus
-      ? _c("p", [_vm._v(_vm._s(_vm.$store.state.checkoutStatus))])
+    _vm.checkoutStatus
+      ? _c("p", [_vm._v(_vm._s(_vm.checkoutStatus))])
       : _vm._e()
   ])
 }
