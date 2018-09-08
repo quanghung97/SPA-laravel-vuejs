@@ -11,20 +11,12 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from './store/index';
 import {currency} from './currency';
-import Home from './components/Home.vue';
-import Articles from './components/Articles.vue';
+import router from "./router";
+import Argon from "./plugins/argon-kit";
 
-Vue.use(VueRouter);
+Vue.config.productionTip = false;
+Vue.use(Argon);
 
-
-const routes = [
-    { path: '/home', component:  Home},
-    { path: '/articles/:teamId', component:  Articles},
-];
-
-const router = new VueRouter({
-    routes
-});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -33,7 +25,7 @@ const router = new VueRouter({
  */
 
 Vue.component('app-component', require('./components/App.vue'));
-Vue.filter('currency', currency)
+Vue.filter('currency', currency);
 
 const app = new Vue({
     el: '#app',

@@ -1,30 +1,20 @@
 <template>
-    <div>
-        <ProductList/>
-        <hr>
-        <ShoppingCart/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <router-link to="/home">Home</router-link>
-        <br/>
-        <br/>
-        <router-link to="/articles/10">Articles 10</router-link>
-        <router-link to="/articles/12">Articles 12</router-link>
-        <router-view></router-view>
+    <div id="app">
+        <router-view name="header"></router-view>
+        <main>
+            <fade-transition origin="center" mode="out-in" :duration="250">
+                <router-view/>
+            </fade-transition>
+        </main>
+        <router-view name="footer"></router-view>
     </div>
 </template>
-
 <script>
-    import ProductList from './ProductList.vue';
-    import ShoppingCart from './ShoppingCart.vue';
-    export default {
-        components: {
-            ProductList,
-            ShoppingCart
-        }
-    }
+import { FadeTransition } from "vue2-transitions";
+
+export default {
+  components: {
+    FadeTransition
+  }
+};
 </script>
