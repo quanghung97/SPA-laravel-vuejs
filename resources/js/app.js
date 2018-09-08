@@ -8,8 +8,23 @@
 require('./bootstrap');
 
 import Vue from 'vue';
+import VueRouter from 'vue-router';
 import store from './store/index';
 import {currency} from './currency';
+import Home from './components/Home.vue';
+import Articles from './components/Articles.vue';
+
+Vue.use(VueRouter);
+
+
+const routes = [
+    { path: '/home', component:  Home},
+    { path: '/articles', component:  Articles},
+];
+
+const router = new VueRouter({
+    routes
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -22,5 +37,6 @@ Vue.filter('currency', currency)
 
 const app = new Vue({
     el: '#app',
+    router,
     store: store
 });

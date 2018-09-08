@@ -3,6 +3,14 @@
         <ProductList/>
         <hr>
         <ShoppingCart/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <router-view></router-view>
     </div>
 </template>
 
