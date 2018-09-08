@@ -12,12 +12,6 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Icons -->
-        <link href="/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
-        <link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
-        <!-- Theme CSS -->
-        <link type="text/css" href="/assets/css/argon.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="/css/app.css">
     </head>
     <body>
@@ -28,12 +22,6 @@
             <app-component/>
         </div>
         <script src="/js/app.js"></script>
-        <!-- Core -->
-        <script src="/assets/vendor/jquery/jquery.min.js"></script>
-        <script src="/assets/vendor/popper/popper.min.js"></script>
-        <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
 
-        <!-- Theme JS -->
-        <script src="/assets/js/argon.min.js"></script>
     </body>
 </html>
