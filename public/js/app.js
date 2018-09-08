@@ -43382,7 +43382,7 @@ __webpack_require__(20);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
-var routes = [{ path: '/home', component: __WEBPACK_IMPORTED_MODULE_4__components_Home_vue___default.a }, { path: '/articles', component: __WEBPACK_IMPORTED_MODULE_5__components_Articles_vue___default.a }];
+var routes = [{ path: '/home', component: __WEBPACK_IMPORTED_MODULE_4__components_Home_vue___default.a }, { path: '/articles/:teamId', component: __WEBPACK_IMPORTED_MODULE_5__components_Articles_vue___default.a }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
     routes: routes
@@ -49065,7 +49065,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49082,8 +49082,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    watch: {
+        // '$route' (to, from) {
+        //     alert(to.params.teamId)
+        // }
+    },
+
+    created: function created() {
+        // alert(this.$route.params.teamId)
+    },
+
+
+    methods: {
+        goHome: function goHome() {
+            this.$router.push('/home');
+        }
+    }
+});
 
 /***/ }),
 /* 58 */
@@ -49093,7 +49112,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    Articles\n")])
+  return _c("div", [
+    _vm._v("\n    Articles\n    "),
+    _c("p", [_vm._v("ID: " + _vm._s(this.$route.params.teamId))]),
+    _vm._v(" "),
+    _c("button", { attrs: { type: "button" }, on: { click: _vm.goHome } }, [
+      _vm._v("button")
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -49162,6 +49188,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ProductList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ProductList_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ShoppingCart_vue__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ShoppingCart_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ShoppingCart_vue__);
+//
+//
+//
+//
 //
 //
 //
@@ -49603,7 +49633,19 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
+      _c("router-link", { attrs: { to: "/home" } }, [_vm._v("Home")]),
+      _vm._v(" "),
       _c("br"),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: "/articles/10" } }, [
+        _vm._v("Articles 10")
+      ]),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: "/articles/12" } }, [
+        _vm._v("Articles 12")
+      ]),
       _vm._v(" "),
       _c("router-view")
     ],
